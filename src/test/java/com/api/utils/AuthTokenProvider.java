@@ -53,8 +53,8 @@ public class AuthTokenProvider {
 			.extract().jsonPath().getString("data.token")
 		;
 		
-		System.out.println("---------------------------------");
-		System.out.println("Authorization token used: "+ token + "\n");
+		System.out.println("---------------------------------\n");
+//		System.out.println("Authorization token used: "+ token + "\n");
 		
 		return token;
 			
