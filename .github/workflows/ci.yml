@@ -15,7 +15,6 @@ on:
         options: [qa,uat,dev]
         default: qa
         required: true
-
       suiteXmlFile:
         description: "TestNG XML File"
         type: choice
