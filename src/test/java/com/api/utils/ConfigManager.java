@@ -1,8 +1,6 @@
 package com.api.utils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -21,7 +19,7 @@ public class ConfigManager {
 
 	static {
 		// Operation of loading the properties file in the memory!!
-		// static block -> it will executed!! ONCE During CLASS LOADING TIME!!!
+		// static block -> it will be executed!! ONCE During CLASS LOADING TIME!!!
 
 //		env = System.getProperty("env").toLowerCase().trim();
 		env = System.getProperty("env", "qa").toLowerCase().trim();

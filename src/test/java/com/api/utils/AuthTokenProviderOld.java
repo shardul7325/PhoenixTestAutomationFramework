@@ -1,16 +1,19 @@
 package com.api.utils;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static io.restassured.RestAssured.*;
+
+import static org.hamcrest.Matchers.*;
+
+import static com.api.constants.Role.*;
 
 import com.api.constants.Role;
 import com.api.pojo.UserCredentials;
 
 import io.restassured.http.ContentType;
 
-public class AuthTokenProvider {
+public class AuthTokenProviderOld {
 
-	private AuthTokenProvider() {
+	private AuthTokenProviderOld() {
 		//Creating private Constructor to prevent Object Creation.
 	}
 	
@@ -20,13 +23,20 @@ public class AuthTokenProvider {
 		//we want to extract the token and print it on the console!!
 		
 		UserCredentials userCred = null;
-				
-		switch(role) {
-		case FD -> userCred = new UserCredentials("iamfd", "password");
-		case SUP -> userCred = new UserCredentials("iamsup", "password");
-		case ENG -> userCred = new UserCredentials("iameng", "password");
-		case QC -> userCred = new UserCredentials("iamqc", "password");
-		default -> System.out.println("Invalid Role Provided!! Please check again!!");
+		if(role == FD) {
+			userCred = new UserCredentials("iamfd", "password");
+		}
+		
+		else if(role == SUP) {
+			userCred = new UserCredentials("iamsup", "password");
+		}
+		
+		else if(role == ENG) {
+			userCred = new UserCredentials("iameng", "password");
+		}
+		
+		else if(role == QC) {
+			userCred = new UserCredentials("iamqc", "password");
 		}
 		
 		String token = given()

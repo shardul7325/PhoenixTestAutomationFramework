@@ -1,26 +1,35 @@
 package com.api.tests;
 
-import static com.api.constants.Role.FD;
-import static io.restassured.RestAssured.given;
-
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
-import com.api.utils.SpecUtil;
+import com.api.constants.Role;
+import com.api.utils.AuthTokenProvider;
+import com.api.utils.ConfigManager;
 
 import io.restassured.module.jsv.JsonSchemaValidator;
 
-public class MasterAPITest {
+import static io.restassured.RestAssured.*;
+
+public class MasterAPITestOld1 {
 
 	@Test
 	public void masterAPITest() {
 		
 		given()
-			.spec(SpecUtil.requestSpecWithAuth(FD))
+			.baseUri(ConfigManager.getProperty("BASE_URI"))
+		.and()
+			.header("Authorization", AuthTokenProvider.getToken(Role.FD))
+		.and()
+			.contentType("")
+			//default content-type when making a POST request is "application/url-formencoded" which may give us an error
+			//hence we need to pass empty string to say we are not attaching any content-type
+			.log().all()
 		.when()
 			.post("master")
 		.then()
-			.spec(SpecUtil.responseSpec_OK())
+			.log().all()
+			.statusCode(200)
 			.time(Matchers.lessThan(1000L))
 			.body("message", Matchers.equalTo("Success"))
 			.body("data", Matchers.notNullValue())
@@ -40,11 +49,17 @@ public class MasterAPITest {
 	public void invalidTokenMaserAPITest() {
 		
 		given()
-			.spec(SpecUtil.requestSpec())
+			.baseUri(ConfigManager.getProperty("BASE_URI"))
+		.and()
+			.header("Authorization", "")
+		.and()
+			.contentType("")
+			.log().all()
 		.when()
 			.post("master")
 		.then()
-			.spec(SpecUtil.responseSpec_TEXT(401))
+			.log().all()
+			.statusCode(401)
 		;
 	}
 }
