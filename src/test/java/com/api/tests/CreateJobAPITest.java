@@ -14,7 +14,7 @@ import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
-import com.api.utils.ConfigManager;
+import com.api.utils.DateTimeUtility;
 import com.api.utils.SpecUtil;
 
 import io.restassured.module.jsv.JsonSchemaValidator;
@@ -33,9 +33,11 @@ public class CreateJobAPITest {
 				, "", "Blue Ridge Circle", "Hinjewadi Phase 1"
 				, "411057", "India", "Maharashtra");
 		
-		CustomerProduct customerProduct = new CustomerProduct("2025-04-13T18:30:00.000Z"
-				, "32074072156819", "32074072156819", "32074072156819"
-				, "2025-04-13T18:30:00.000Z", 1, 1);
+		String getDateTimeOfPurchase = DateTimeUtility.getTimeWithNDaysAgo(10);
+		
+		CustomerProduct customerProduct = new CustomerProduct(getDateTimeOfPurchase
+				, "32274072156819", "32274072156819", "32274072156819"
+				, getDateTimeOfPurchase, 1, 1);
 		
 		Problems problems = new Problems(1, "Battery Issue");
 		List<Problems> problemsList = new ArrayList<Problems>();
