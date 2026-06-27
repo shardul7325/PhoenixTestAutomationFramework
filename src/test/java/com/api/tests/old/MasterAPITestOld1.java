@@ -1,4 +1,4 @@
-package com.api.tests;
+package com.api.tests.old;
 
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
