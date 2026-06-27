@@ -8,7 +8,14 @@ import java.util.List;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
+import com.api.constants.Model;
+import com.api.constants.OEM;
+import com.api.constants.Platform;
+import com.api.constants.Problem;
+import com.api.constants.Product;
 import com.api.constants.Role;
+import com.api.constants.ServiceLocation;
+import com.api.constants.WarrantyStatus;
 import com.api.request.model.CreateJobPayload;
 import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
@@ -29,22 +36,35 @@ public class CreateJobAPITest {
 				, "8655843470", ""
 				, "shardulpakhare2512@gmail.com", "");
 		
-		CustomerAddress customerAddress = new CustomerAddress("B2 0109", "Blue Ridge Apartments"
-				, "", "Blue Ridge Circle", "Hinjewadi Phase 1"
+		CustomerAddress customerAddress = new CustomerAddress("B2 0109"
+				, "Blue Ridge Apartments"
+				, ""
+				, "Blue Ridge Circle"
+				, "Hinjewadi Phase 1"
 				, "411057", "India", "Maharashtra");
 		
 		String getDateTimeOfPurchase = DateTimeUtility.getTimeWithNDaysAgo(10);
 		
 		CustomerProduct customerProduct = new CustomerProduct(getDateTimeOfPurchase
-				, "32274072156819", "32274072156819", "32274072156819"
-				, getDateTimeOfPurchase, 1, 1);
+				, "32374072156819"
+				, "32374072156819"
+				, "32374072156819"
+				, getDateTimeOfPurchase
+				, Product.NEXUS_2.getCode()
+				, Model.NEXUS_2_BLUE.getCode());
 		
-		Problems problems = new Problems(1, "Battery Issue");
+		Problems problems = new Problems(Problem.SMARTPHONE_IS_RUNNING_SLOWLY.getCode(), "Battery Issue");
 		List<Problems> problemsList = new ArrayList<Problems>();
 		problemsList.add(problems);
 		
-		CreateJobPayload createJobPayload = new CreateJobPayload(0, 2, 1, 1
-				, customer, customerAddress, customerProduct, problemsList);
+		CreateJobPayload createJobPayload = new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode()
+				, Platform.FRONT_DESK.getCode()
+				, WarrantyStatus.IN_WARRANTY.getCode()
+				, OEM.GOOGLE.getCode()
+				, customer
+				, customerAddress
+				, customerProduct
+				, problemsList);
 		
 		
 		given()
