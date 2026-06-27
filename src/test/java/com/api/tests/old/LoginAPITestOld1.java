@@ -1,4 +1,4 @@
-package com.api.tests;
+package com.api.tests.old;
 
 import static com.api.utils.ConfigManager.getProperty;
 import static io.restassured.RestAssured.given;
