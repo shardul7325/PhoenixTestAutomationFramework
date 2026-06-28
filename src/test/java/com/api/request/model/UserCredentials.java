@@ -1,5 +1,5 @@
 package com.api.request.model;
-//Authir Name: Shardul
+//Created by Shardul Pakhare
 public record UserCredentials(
 		String username
 		, String password
