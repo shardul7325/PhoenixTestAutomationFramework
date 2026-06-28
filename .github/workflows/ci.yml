@@ -28,17 +28,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     
     - name: Set up JDK 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5.4.0
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
+    - name: Default Values for Execution
+      id: default
+      run: |
+            echo "suiteXmlFile=${{ github.event.inputs.suiteXmlFile || 'testng.xml' }}" >> $GITHUB_OUTPUT
+            echo "env=${{ github.event.inputs.env || 'qa' }}" >> $GITHUB_OUTPUT
         
     - name: Execute Test Automation Framework
-      run: mvn clean test -DsuiteXmlFile="${{ github.event.inputs.suiteXmlFile || 'testng.xml' }}" -Denv="${{ github.event.inputs.env || 'qa' }}"
+      run: mvn clean test -DsuiteXmlFile="${{ steps.default.outputs.suiteXmlFile }}" -Denv="${{ steps.default.outputs.env }}"
     
     - name: Upload a Build Artifact
       if: always()
